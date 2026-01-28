@@ -67,6 +67,7 @@ class PaymentProcessorFactory:
         raise ValueError(f"Unsupported bank: {state_code}")
 
 
-def register_state_payment_processors() -> None:
+def register_state_payment_processors() -> PaymentProcessorFactory:
     PaymentProcessorFactory.register_payment_processor("IL", BankOfIllinoisPaymentProcessor)
     PaymentProcessorFactory.register_payment_processor("VA", BankOfVirginiaPaymentProcessor)
+    return PaymentProcessorFactory

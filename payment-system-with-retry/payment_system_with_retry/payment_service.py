@@ -1,16 +1,13 @@
 from payment_system_with_retry.models import Payment
 from payment_system_with_retry.payment_retry import AttemptPaymentError
-from payment_system_with_retry.payment_processors import (
-    PaymentProcessor,
-    PaymentProcessorFactory,
-)
+from payment_system_with_retry.payment_processors import PaymentProcessor
 
 
 class PaymentProcessService:
     _payment_processor: PaymentProcessor
 
-    def __init__(self, state_code: str) -> None:
-        self._payment_processor = PaymentProcessorFactory.get_payment_processor(state_code)
+    def __init__(self, payment_processor: PaymentProcessor) -> None:
+        self._payment_processor = payment_processor
 
     def process_payment(self, payment: Payment) -> Payment:
         try:

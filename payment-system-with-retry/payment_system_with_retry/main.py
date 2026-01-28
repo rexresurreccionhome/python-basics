@@ -16,10 +16,12 @@ def parse_args() -> argparse.Namespace:
 
 if __name__ == "__main__":
     args = parse_args()
-    register_state_payment_processors()
+    payment_processor_factory = register_state_payment_processors()
 
     payment = Payment(amount=args.amount)
-    service = PaymentProcessService(state_code=args.state)
+    service = PaymentProcessService(
+        payment_processor=payment_processor_factory.get_payment_processor(args.state)
+    )
     processed_payment = service.process_payment(payment)
     if processed_payment.transaction:
         print(f"Payment Transaction ID: {processed_payment.transaction.transaction_id}")

@@ -12,10 +12,11 @@ from payment_system_with_retry.payment_processors import(
 
 
 def test_register_state_payment_processors__registers_processors(mocker):
-    register_state_payment_processors()
-    il_processor = PaymentProcessorFactory.get_payment_processor("IL")
+    factory = register_state_payment_processors()
+    assert factory is PaymentProcessorFactory
+    il_processor = factory.get_payment_processor("IL")
     assert isinstance(il_processor, BankOfIllinoisPaymentProcessor)
-    va_processor = PaymentProcessorFactory.get_payment_processor("VA")
+    va_processor = factory.get_payment_processor("VA")
     assert isinstance(va_processor, BankOfVirginiaPaymentProcessor)
 
 
@@ -26,7 +27,7 @@ class TestPaymentProcessorFactory:
 
         PaymentProcessorFactory.register_payment_processor("XX", DummyProcessor)
         processor = PaymentProcessorFactory.get_payment_processor("XX")
-        assert processor is DummyProcessor
+        assert isinstance(processor, DummyProcessor)
     
     def test_get_payment_processor__unsupported_state__raises_value_error(self):
         with pytest.raises(ValueError) as exc_info:
