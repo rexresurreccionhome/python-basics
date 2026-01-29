@@ -41,6 +41,7 @@ Design patterns used:
 1. State - To manage account status transitions
 2. Strategy - To define common fraud detection operations
 3. Template - For data validation workflows
-4. Chain of responsibility - To manage the flow in fraud analysis 
+4. Builder - To construct the applicable validations
+5. Chain of responsibility - To manage the flow in fraud analysis 
 
 
